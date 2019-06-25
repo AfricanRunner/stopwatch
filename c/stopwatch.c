@@ -19,7 +19,27 @@ void sw_stop(stopwatch* sw)
 	sw->end_t = clock();
 }
 
-void print(clock_t time)
+clock_t sw_get_total_t(stopwatch* sw)
+{
+	return sw->end_t - sw->start_t;
+}
+
+clock_t sw_get_mean_t(stopwatch* sw)
+{
+	return sw_get_total_t(sw) / sw->laps;
+}
+
+void sw_print_total(stopwatch* sw)
+{
+	sw_print(sw_get_total_t(sw));
+}
+
+void sw_print_mean(stopwatch* sw)
+{
+	sw_print(sw_get_mean_t(sw));
+}
+
+void sw_print(clock_t time)
 {
 	unsigned long ms = ((time * 1000) / CLOCKS_PER_SEC) % 1000;
 	unsigned long s = (time / CLOCKS_PER_SEC) % 60;
@@ -30,23 +50,5 @@ void print(clock_t time)
 		printf("%02lu:%02lu:%02lu:%03lu", h, m, s, ms);
 	else
 		printf("%02lu:%02lu:%03lu", m, s, ms);
-}
-
-void sw_print(stopwatch* sw)
-{
-	clock_t time = (sw->end_t - sw->start_t);
-
-	printf("Total Time: ");
-	print(time);
-	printf("\n");
-
-	if(sw->laps != 1)
-	{
-		time /= sw->laps;
-
-		printf("Average Lap: ");
-		print(time);
-		printf("\n");
-	}
 }
 

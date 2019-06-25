@@ -9,7 +9,6 @@ using namespace std::chrono;
 
 void stopwatch::start()
 {
-	laps = 1;
 	start_time = steady_clock::now();
 }
 
@@ -23,8 +22,30 @@ void stopwatch::stop()
 	end_time = steady_clock::now();
 }
 
-void write_to_stream(std::stringstream& ss, const std::chrono::duration<double>& time)
+duration<double> stopwatch::get_total_time() const
 {
+	return start_time - end_time;
+}
+
+duration<double> stopwatch::get_mean_time() const
+{
+	return get_total_time() / laps;
+}
+
+std::string stopwatch::get_total_str() const
+{
+	return format_time(get_total_time());
+}
+
+std::string stopwatch::get_mean_str() const
+{
+	return format_time(get_mean_time());
+}
+
+std::string stopwatch::format_time(const duration<double>& time)
+{
+	std::stringstream ss;
+
 	unsigned int mil_sec = duration_cast<milliseconds>(time).count() % 1000;
 	unsigned int sec = duration_cast<seconds>(time).count() % 60;
 	unsigned int min = duration_cast<minutes>(time).count() % 60;
@@ -35,33 +56,12 @@ void write_to_stream(std::stringstream& ss, const std::chrono::duration<double>&
 	ss << std::setfill('0') << std::setw(2) << min << ":";
 	ss << std::setfill('0') << std::setw(2) << sec << ":";
 	ss << std::setfill('0') << std::setw(3) << mil_sec;
-}
-
-std::string stopwatch::total_str() const
-{
-	std::stringstream ss;
-
-	auto time = (end_time - start_time);
-	write_to_stream(ss, time);
-
-	return ss.str();
-}
-
-std::string stopwatch::mean_str() const
-{
-	std::stringstream ss;
-
-	auto time = (end_time - start_time) / laps;
-	write_to_stream(ss, time);
 
 	return ss.str();
 }
 
 std::ostream& sw::operator<<(std::ostream& out, const stopwatch& sw)
 {
-	out << "Total Time: " << sw.total_str();
-	if(sw.laps != 1)
-		out << "\nMean Time: " << sw.mean_str();
+	out << sw.get_total_str();
 	return out;
 }
-

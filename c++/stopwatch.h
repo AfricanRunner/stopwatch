@@ -13,15 +13,20 @@ namespace sw
 	private:
 		std::chrono::steady_clock::time_point start_time;
 		std::chrono::steady_clock::time_point end_time;
-		int laps;
+		int laps = 1;
 
 	public:
 		void start();
 		void lap();
 		void stop();
 
-		std::string total_str() const;
-		std::string mean_str() const;
+		std::chrono::duration<double> get_total_time() const;
+		std::chrono::duration<double> get_mean_time() const;
+
+		std::string get_total_str() const;
+		std::string get_mean_str() const;
+
+		static std::string format_time(const std::chrono::duration<double>& time);
 
 		friend std::ostream& operator<<(std::ostream& out, const stopwatch& sw);
 	};

@@ -2,8 +2,8 @@
  * A stopwatch class to time the runtime of an algorithms and processes. Uses
  * the standard java method (<code>System.currentTimeMills()</code>) to get the
  * current time in milliseconds since the Unix epoch.
- * 
- * @author Daniël du Preez 
+ *
+ * @author Daniël du Preez
  */
 public class Stopwatch
 {
@@ -11,13 +11,13 @@ public class Stopwatch
 	private static final long ONE_HOUR = 0x000000000036EE80L;;
 
 	/** The start time of the stopwatch in milliseconds. */
-	private long startTime;
+	private long startTime = 0L;
 
 	/** The end time of the stopwatch. in milliseconds */
-	private long endTime;
+	private long endTime = 0L;
 
 	/** The number of laps recorded by the stopwatch. */
-	private int laps;
+	private int laps = 1;
 
 	/**
 	 * Sets the start time for the stopwatch by setting the
@@ -49,7 +49,7 @@ public class Stopwatch
 	/**
 	 * Calculates the time the stopwatch ran for by calculating the difference
 	 * between the start and end times.
-	 * 
+	 *
 	 * @return The time the stopwatch ran for in milliseconds.
 	 */
 	public long getTime()
@@ -60,7 +60,7 @@ public class Stopwatch
 	/**
 	 * Calculates the mean time per lap by dividing the total time the stopwatch
 	 * ran for by the number of recorded laps.
-	 * 
+	 *
 	 * @return The mean lap time in milliseconds.
 	 */
 	public long getMean()
@@ -71,7 +71,7 @@ public class Stopwatch
 	/**
 	 * Generates a String representation of the total time on the stopwatch
 	 * using the <code>formatTime</code> method.
-	 * 
+	 *
 	 * @return The total time as a String.
 	 */
 	public String getTimeString()
@@ -82,7 +82,7 @@ public class Stopwatch
 	/**
 	 * Generates a String representation of the mean time interval using the
 	 * <code>formatTime</code> method.
-	 * 
+	 *
 	 * @return The mean time as a String
 	 */
 	public String getMeanString()
@@ -93,7 +93,7 @@ public class Stopwatch
 	/**
 	 * Formats the time interval of the stopwatch using the
 	 * <code>formatTime</code> method.
-	 * 
+	 *
 	 * @return A formated version of the stopwatch's time.
 	 */
 	@Override
@@ -105,7 +105,7 @@ public class Stopwatch
 	/**
 	 * Formats a interval of milliseconds into milliseconds, seconds, minutes,
 	 * and hours (if applicable) in the form HH:MM:SS:mmm or MM:SS:mmm.
-	 * 
+	 *
 	 * @param interval
 	 *            The interval in milliseconds.
 	 * @return The formated time interval.
